@@ -23,7 +23,6 @@ const LoginForm = () => {
 
   useEffect(() => {
     if (auth.adminId) navigator("/");
-    console.log(process.env.REACT_APP_API_BASE_URL);
   }, [auth]);
 
   return <LoginTemplate onChange={onChange} onClick={onClick} />;

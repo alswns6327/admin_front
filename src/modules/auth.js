@@ -7,12 +7,9 @@ const LOGIN_SUCCESS = "auth/LOGIN_SUCCESS";
 const loginSuccess = createAction(LOGIN_SUCCESS, (admin) => admin);
 
 export const loginAsync = (adminId, password) => async (dispatch) => {
-  const admin = await api.login({ adminId, password });
-  console.log("--------------");
-  console.log(admin);
-  console.log(admin.data);
-  console.log(admin.body);
-  dispatch(loginSuccess(admin.data));
+  const response = await api.login({ adminId, password });
+  localStorage.setItem("accessToken", response.data.accessToken);
+  dispatch(loginSuccess(response.data));
 };
 
 const initialState = {
@@ -24,7 +21,7 @@ const admin = handleActions(
   {
     [LOGIN_SUCCESS]: (state, { payload: admin }) => ({
       adminId: admin.adminId,
-      password: admin.password,
+      name: admin.name,
     }),
   },
   initialState

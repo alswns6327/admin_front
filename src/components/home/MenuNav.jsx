@@ -6,7 +6,7 @@ const MenuNavBlock = styled.div``;
 
 const MenuNav = () => {
   const { menuList } = useSelector(({ menu }) => menu);
-  console.log("git 커밋 잔디 테스트");
+
   return (
     <MenuNavBlock>
       <ul>

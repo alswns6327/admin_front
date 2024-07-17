@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
-import MenuNav from "../components/home/MenuNav";
-import HomeTemplate from "../components/home/HomeTemplate";
 import { useNavigate } from "react-router-dom";
+import HomeForm from "../containers/home/HomeForm";
 
 const HomePage = () => {
   const navigater = useNavigate();
@@ -14,8 +13,7 @@ const HomePage = () => {
 
   return (
     <>
-      <MenuNav />
-      <HomeTemplate />
+      <HomeForm />
     </>
   );
 };

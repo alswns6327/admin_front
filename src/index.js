@@ -7,15 +7,20 @@ import { Provider } from "react-redux";
 import { applyMiddleware, createStore } from "redux";
 import rootReducer from "./modules";
 import { thunk } from "redux-thunk";
+import store from "./modules";
+import { persistStore } from "redux-persist";
+import { PersistGate } from "redux-persist/integration/react";
+
+export let persist = persistStore(store);
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
-const store = createStore(rootReducer, applyMiddleware(thunk));
-
 root.render(
   <Provider store={store}>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
+    <PersistGate loading={null} persistor={persist}>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </PersistGate>
   </Provider>
 );

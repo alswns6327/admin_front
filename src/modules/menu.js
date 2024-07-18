@@ -1,26 +1,38 @@
-import { createAction, handleActions } from "redux-actions";
 import * as api from "../lib/menu";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 const GET_MENU_LIST = "menu/GET_MENU_LIST";
 
-const getMenuList = createAction(GET_MENU_LIST, (menuList) => menuList);
-
-export const getMenuListAsync = () => async (dispatch) => {
-  const response = await api.getMenuList();
-  dispatch(getMenuList(response.data));
-};
-
 const initialState = {
   menuList: null,
+  state: "",
 };
 
-const menu = handleActions(
-  {
-    [GET_MENU_LIST]: (state, { payload: newMenuList }) => ({
-      menuList: newMenuList,
-    }),
-  },
-  initialState
-);
+export const asyncGetMenuList = createAsyncThunk(GET_MENU_LIST, async () => {
+  const response = await api.getMenuList();
+  return response.data;
+});
 
-export default menu;
+const menuSlice = createSlice({
+  name: "muneSlice",
+  initialState: initialState,
+  reducers: {},
+  extraReducers: (builder) => {
+    builder.addCase(asyncGetMenuList.pending, (state, action) => {
+      state.state = "조회중";
+    });
+    builder.addCase(
+      asyncGetMenuList.fulfilled,
+      (state, { payload: newMenuList }) => {
+        state.state = "";
+        state.menuList = newMenuList;
+      }
+    );
+    builder.addCase(asyncGetMenuList.rejected, (state, action) => {
+      state.state = "에러 발생";
+    });
+  },
+});
+
+export const {} = menuSlice.actions;
+export default menuSlice.reducer;

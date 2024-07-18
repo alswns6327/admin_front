@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import LoginTemplate from "../../components/auth/LoginTemplate";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { loginAsync } from "../../modules/auth";
+import { asyncLogin } from "../../modules/auth";
 
 const LoginForm = () => {
   const dispatch = useDispatch();
@@ -11,19 +11,18 @@ const LoginForm = () => {
 
   const [adminId, setAdminId] = useState("");
   const [password, setPassword] = useState("");
-
   const onChange = (e) => {
     const { value, name } = e.target;
     if (name === "adminId") setAdminId(value);
     if (name === "password") setPassword(value);
   };
   const onClick = () => {
-    dispatch(loginAsync(adminId, password));
+    dispatch(asyncLogin({ adminId, password }));
   };
 
   useEffect(() => {
     if (auth.adminId) navigator("/");
-  }, [auth]);
+  }, [auth, navigator]);
 
   return <LoginTemplate onChange={onChange} onClick={onClick} />;
 };

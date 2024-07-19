@@ -17,15 +17,6 @@ const MenuNav = () => {
               </li>
             ))
           : []}
-        <li>
-          <Link to="/account">계정 관리</Link>
-        </li>
-        <li>
-          <Link to="/code">코드 관리</Link>
-        </li>
-        <li>
-          <Link to="/menu">메뉴 관리</Link>
-        </li>
       </ul>
     </MenuNavBlock>
   );

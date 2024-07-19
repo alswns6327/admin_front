@@ -9,15 +9,13 @@ const LoginForm = () => {
   const navigator = useNavigate();
   const auth = useSelector(({ auth }) => auth);
 
-  const [adminId, setAdminId] = useState("");
-  const [password, setPassword] = useState("");
+  const [loginForm, setLoginForm] = useState({ adminId: "", password: "" });
   const onChange = (e) => {
     const { value, name } = e.target;
-    if (name === "adminId") setAdminId(value);
-    if (name === "password") setPassword(value);
+    setLoginForm({ ...loginForm, [name]: value });
   };
   const onClick = () => {
-    dispatch(asyncLogin({ adminId, password }));
+    dispatch(asyncLogin(loginForm));
   };
 
   useEffect(() => {

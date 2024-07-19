@@ -1,10 +1,10 @@
 import React from "react";
-import HomeForm from "../containers/home/HomeForm";
+import HomeContainer from "../containers/home/HomeContainer";
 
 const HomePage = () => {
   return (
     <>
-      <HomeForm />
+      <HomeContainer />
     </>
   );
 };

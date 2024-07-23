@@ -6,6 +6,7 @@ const SAVE_MENU = "menu/SAVE_MENU";
 const REMOVE_MENU = "menu/REMOVE_MENU";
 
 const initialState = {
+  temporaryMenuList: null,
   menuList: null,
   state: "",
 };
@@ -31,7 +32,11 @@ export const asyncRemoveTheMenu = createAsyncThunk(
 const menuSlice = createSlice({
   name: "muneSlice",
   initialState: initialState,
-  reducers: {},
+  reducers: {
+    initTemporaryMenuList(state, { payload: menuList }) {
+      state.temporaryMenuList = menuList;
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(asyncGetMenuList.pending, (state, action) => {
       state.state = "조회중";
@@ -75,5 +80,5 @@ const menuSlice = createSlice({
   },
 });
 
-export const {} = menuSlice.actions;
+export const { initTemporaryMenuList } = menuSlice.actions;
 export default menuSlice.reducer;

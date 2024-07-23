@@ -9,7 +9,6 @@ const HomeForm = () => {
   const dispatch = useDispatch();
   const navigater = useNavigate();
   const auth = useSelector(({ auth }) => auth);
-  console.log(auth);
   useEffect(
     function checkAuth() {
       if (!auth.adminId) {

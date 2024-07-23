@@ -1,17 +1,27 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import MenuListTemplate from "../../components/menu/MenuListTemplate";
 import MenuFormTamplate from "../../components/menu/MenuFormTamplate";
 import { useDispatch, useSelector } from "react-redux";
-import menu, { asyncRemoveTheMenu, asyncSaveTheMenu } from "../../modules/menu";
+import {
+  asyncRemoveTheMenu,
+  asyncSaveTheMenu,
+  initTemporaryMenuList,
+} from "../../modules/menu";
 
 const MenuContainer = () => {
-  const { menuList } = useSelector(({ menu }) => menu);
+  const { menuList, temporaryMenuList } = useSelector(({ menu }) => menu);
+
   const dispatch = useDispatch();
+  const [childForm, setChildForm] = useState({});
   const [menuForm, setMenuForm] = useState({ menuName: "", menuPath: "" });
 
   const onChangeMenuForm = (e) => {
     const { name, value } = e.target;
     setMenuForm({ ...menuForm, [name]: value });
+  };
+
+  const onChildFormChange = (e) => {
+    const { name, value } = e.target;
   };
 
   const saveMenu = () => {
@@ -22,9 +32,18 @@ const MenuContainer = () => {
     dispatch(asyncRemoveTheMenu(menuId));
   };
 
+  const onAddMenu = (menuId) => {};
+
+  useEffect(() => {
+    dispatch(initTemporaryMenuList(menuList));
+  }, [menuList, dispatch]);
+
   return (
     <>
-      <MenuListTemplate menuList={menuList} onRemoveMenu={onRemoveMenu} />
+      <MenuListTemplate
+        temporaryMenuList={temporaryMenuList ? temporaryMenuList : []}
+        onRemoveMenu={onRemoveMenu}
+      />
       <MenuFormTamplate
         onChangeMenuForm={onChangeMenuForm}
         saveMenu={saveMenu}

@@ -2,19 +2,18 @@ import * as api from "../lib/auth";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 const LOGIN = "auth/LOGIN";
+const GET_ADMIN_LIST = "auth/GET_ADMIN_LIST";
 
 const initialState = {
   adminId: null,
   name: null,
   state: "",
+  adminList: null,
 };
 
 export const asyncLogin = createAsyncThunk(
   LOGIN,
   async ({ adminId, password }) => {
-    console.log(adminId);
-    console.log(password);
-
     const response = await api.login({ adminId, password });
     localStorage.setItem("accessToken", response.data.accessToken);
     return response.data;

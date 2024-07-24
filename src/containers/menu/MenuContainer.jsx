@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import MenuListTemplate from "../../components/menu/MenuListTemplate";
-import MenuFormTamplate from "../../components/menu/MenuFormTamplate";
+import MenuFormTemplate from "../../components/menu/MenuFormTemplate";
 import { useDispatch, useSelector } from "react-redux";
 import {
   asyncRemoveTheMenu,
@@ -44,7 +44,7 @@ const MenuContainer = () => {
         temporaryMenuList={temporaryMenuList ? temporaryMenuList : []}
         onRemoveMenu={onRemoveMenu}
       />
-      <MenuFormTamplate
+      <MenuFormTemplate
         onChangeMenuForm={onChangeMenuForm}
         saveMenu={saveMenu}
       />

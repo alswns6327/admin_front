@@ -1,15 +1,15 @@
 import styled from "styled-components";
 
-const MenuFormTamplateBlock = styled.div``;
+const MenuFormTemplateBlock = styled.div``;
 
-const MenuFormTamplate = ({ onChangeMenuForm, saveMenu }) => {
+const MenuFormTemplate = ({ onChangeMenuForm, saveMenu }) => {
   return (
-    <MenuFormTamplateBlock>
+    <MenuFormTemplateBlock>
       <input onChange={onChangeMenuForm} name="menuName" placeholder="메뉴명" />
       <input onChange={onChangeMenuForm} name="menuPath" placeholder="경로" />
       <button onClick={saveMenu}>저장</button>
-    </MenuFormTamplateBlock>
+    </MenuFormTemplateBlock>
   );
 };
 
-export default MenuFormTamplate;
+export default MenuFormTemplate;

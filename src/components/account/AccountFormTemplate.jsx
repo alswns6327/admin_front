@@ -3,7 +3,6 @@ import styled from "styled-components";
 const AccountFormTemplateBlock = styled.div``;
 
 const AccountFormTemplate = ({ onAdminFormChange, adminForm }) => {
-  console.log(adminForm);
   return (
     <AccountFormTemplateBlock>
       <input
@@ -28,6 +27,7 @@ const AccountFormTemplate = ({ onAdminFormChange, adminForm }) => {
         placeholder="name"
       />
       <br />
+      <button>저장</button>
     </AccountFormTemplateBlock>
   );
 };

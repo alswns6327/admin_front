@@ -6,8 +6,8 @@ const SAVE_MENU = "menu/SAVE_MENU";
 const REMOVE_MENU = "menu/REMOVE_MENU";
 
 const initialState = {
-  temporaryMenuList: null,
-  menuList: null,
+  temporaryMenuList: [],
+  menuList: [],
   state: "",
 };
 

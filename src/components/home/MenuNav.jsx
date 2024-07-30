@@ -4,9 +4,9 @@ import styled from "styled-components";
 
 const MenuNavBlock = styled.div``;
 
-const MenuNav = () => {
+const MenuNav = ({ onLogout }) => {
   const { menuList } = useSelector(({ menu }) => menu);
-
+  if (typeof menuList !== "object") return <></>;
   return (
     <MenuNavBlock>
       <ul>
@@ -29,6 +29,7 @@ const MenuNav = () => {
             ))
           : []}
       </ul>
+      <button onClick={onLogout}>로그아웃</button>
     </MenuNavBlock>
   );
 };

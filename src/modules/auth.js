@@ -3,13 +3,13 @@ import * as api from "../lib/auth";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 const LOGIN = "auth/LOGIN";
-const GET_ADMIN_LIST = "auth/GET_ADMIN_LIST";
+const LOGOUT = "auth/LOGOUT";
 
 const initialState = {
   adminId: null,
   name: null,
   state: "",
-  adminList: null,
+  adminList: [],
 };
 
 export const asyncLogin = createAsyncThunk(
@@ -23,6 +23,15 @@ export const asyncLogin = createAsyncThunk(
     return response.data;
   }
 );
+
+export const logout = createAsyncThunk(LOGOUT, async () => {
+  const response = await api.logout();
+  if (response.status === 200) {
+    localStorage.setItem("accessToken", "");
+    apiClient.defaults.headers.Authorization = "";
+  }
+  return 1;
+});
 
 const authSlice = createSlice({
   name: "authSlice",
@@ -39,6 +48,12 @@ const authSlice = createSlice({
     });
     builder.addCase(asyncLogin.rejected, (state, action) => {
       state.state = "로그인 실패";
+    });
+    builder.addCase(logout.fulfilled, (state, action) => {
+      state.adminId = null;
+      state.name = null;
+      state.state = "";
+      state.adminList = [];
     });
   },
 });

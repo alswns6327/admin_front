@@ -3,7 +3,9 @@ import styled from "styled-components";
 import MenuPage from "../../pages/MenuPage";
 import AccountPage from "../../pages/AccountPage";
 
-const HomeTemplateBlock = styled.div``;
+const HomeTemplateBlock = styled.div`
+  margin-left: 170px;
+`;
 
 const HomeTemplate = () => {
   return (

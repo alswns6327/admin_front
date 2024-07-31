@@ -1,5 +1,5 @@
-import apiClient from "../lib/apiClient";
-import * as api from "../lib/auth";
+import apiClient from "../lib/api/apiClient";
+import * as api from "../lib/api/auth";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 const LOGIN = "auth/LOGIN";
@@ -16,6 +16,7 @@ export const asyncLogin = createAsyncThunk(
   LOGIN,
   async ({ adminId, password }) => {
     const response = await api.login({ adminId, password });
+    console.log(response);
     localStorage.setItem("accessToken", response.data.accessToken);
     apiClient.defaults.headers.Authorization = "Bearer ".concat(
       response.data.accessToken
@@ -42,6 +43,7 @@ const authSlice = createSlice({
       state.state = "로그인중";
     });
     builder.addCase(asyncLogin.fulfilled, (state, { payload: admin }) => {
+      if (admin === "login") return alert("로그인 실패");
       state.adminId = admin.adminId;
       state.name = admin.name;
       state.state = "";

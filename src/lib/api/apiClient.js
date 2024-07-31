@@ -8,7 +8,6 @@ const apiClient = axios.create({
 
 export const createRequest = async (method, url, data) => {
   try {
-    console.log(method, url);
     if (method === "get") return await apiClient.get(url);
     else if (method === "post") return await apiClient.post(url, data);
     else if (method === "patch") return await apiClient.patch(url, data);

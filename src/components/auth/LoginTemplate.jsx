@@ -1,4 +1,6 @@
 import styled from "styled-components";
+import Input from "../common/Input";
+import Button from "../common/Button";
 
 const LoginTemplateBlock = styled.div`
   position: absolute;
@@ -19,17 +21,28 @@ const LoginTemplateBlock = styled.div`
   }
 `;
 
-const LoginTemplate = ({ onChange, onClick }) => {
+const LoginTemplate = ({ onChange, onClick, onEnter }) => {
   return (
     <LoginTemplateBlock>
       <h2>로그인</h2>
       <span>
-        <span>id :</span> <input name="adminId" onChange={onChange} />
+        <Input
+          name="adminId"
+          onChange={onChange}
+          onKeyUp={onEnter}
+          placeholder="ID"
+        />
       </span>
       <span>
-        <span>pw :</span> <input name="password" onChange={onChange} />
+        <Input
+          name="password"
+          onChange={onChange}
+          onKeyUp={onEnter}
+          type="password"
+          placeholder="PW"
+        />
       </span>
-      <button onClick={onClick}>로그인</button>
+      <Button onClick={onClick}>로그인</Button>
     </LoginTemplateBlock>
   );
 };

@@ -4,11 +4,16 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { asyncGetMenuList } from "../../modules/menu";
-import apiRequest from "../../hooks/common/apiRequest";
-import { getMenuList } from "../../lib/menu";
 import { logout } from "../../modules/auth";
+import apiRequest from "../../lib/api/apiRequest";
+import Logo from "../../components/common/Logo";
+import styled from "styled-components";
 
-const HomeForm = () => {
+const HomeStyle = styled.div`
+  height: 5000px;
+`;
+
+const HomeContainer = () => {
   const dispatch = useDispatch();
   const navigator = useNavigate();
   const auth = useSelector(({ auth }) => auth);
@@ -27,11 +32,12 @@ const HomeForm = () => {
   };
 
   return (
-    <>
+    <HomeStyle>
+      <Logo />
       <MenuNav onLogout={onLogout} />
       <HomeTemplate />
-    </>
+    </HomeStyle>
   );
 };
 
-export default HomeForm;
+export default HomeContainer;

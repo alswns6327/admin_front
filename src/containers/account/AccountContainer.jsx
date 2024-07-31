@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import AccountFormTemplate from "../../components/account/AccountFormTemplate";
 import AccountListTemplate from "../../components/account/AccountListTemplate";
 import { useDispatch } from "react-redux";
-import { getAdminList, saveAdmin } from "../../lib/auth";
+import { getAdminList, saveAdmin } from "../../lib/api/auth";
 
 const AccountContainer = () => {
   const [adminList, setAdminList] = useState([]);

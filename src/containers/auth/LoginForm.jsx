@@ -18,11 +18,17 @@ const LoginForm = () => {
     dispatch(asyncLogin(loginForm));
   };
 
+  const onEnter = (e) => {
+    if (e.key === "Enter") dispatch(asyncLogin(loginForm));
+  };
+
   useEffect(() => {
     if (auth.adminId) navigator("/");
   }, [auth, navigator]);
 
-  return <LoginTemplate onChange={onChange} onClick={onClick} />;
+  return (
+    <LoginTemplate onEnter={onEnter} onChange={onChange} onClick={onClick} />
+  );
 };
 
 export default LoginForm;

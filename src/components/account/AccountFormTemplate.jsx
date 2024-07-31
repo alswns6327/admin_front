@@ -1,18 +1,19 @@
 import styled from "styled-components";
+import Input from "../common/Input";
 
 const AccountFormTemplateBlock = styled.div``;
 
 const AccountFormTemplate = ({ onAdminFormChange, adminForm }) => {
   return (
     <AccountFormTemplateBlock>
-      <input
+      <Input
         name="adminId"
         onChange={onAdminFormChange}
         value={adminForm.adminId}
         placeholder="ID"
       />
       <br />
-      <input
+      <Input
         name="password"
         onChange={onAdminFormChange}
         value={adminForm.password}
@@ -20,7 +21,7 @@ const AccountFormTemplate = ({ onAdminFormChange, adminForm }) => {
       />
       영문, 숫자, 특수문자를 포함한 8~15 자리의 패스워드를 설정해주세요.
       <br />
-      <input
+      <Input
         name="name"
         onChange={onAdminFormChange}
         value={adminForm.name}

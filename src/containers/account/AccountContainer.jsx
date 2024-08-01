@@ -5,17 +5,7 @@ import { useDispatch } from "react-redux";
 import { getAdminList, saveAdmin } from "../../lib/api/auth";
 
 const AccountContainer = () => {
-  const [adminList, setAdminList] = useState([]);
-
-  useEffect(() => {
-    const asyncGetAdminList = async () => {
-      const response = await getAdminList();
-      setAdminList(response.data);
-    };
-    if (!adminList.length) {
-      asyncGetAdminList();
-    }
-  }, [adminList]);
+  const [adminList, setAdminList] = useState(async () => await getAdminList());
 
   const [adminForm, setAdminForm] = useState({
     adminId: "",

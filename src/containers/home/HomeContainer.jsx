@@ -8,10 +8,9 @@ import { logout } from "../../modules/auth";
 import apiRequest from "../../lib/api/apiRequest";
 import Logo from "../../components/common/Logo";
 import styled from "styled-components";
+import Header from "../../components/common/Header";
 
-const HomeStyle = styled.div`
-  height: 5000px;
-`;
+const HomeStyle = styled.div``;
 
 const HomeContainer = () => {
   const dispatch = useDispatch();
@@ -33,6 +32,7 @@ const HomeContainer = () => {
 
   return (
     <HomeStyle>
+      <Header />
       <Logo />
       <MenuNav onLogout={onLogout} />
       <HomeTemplate />

@@ -24,7 +24,7 @@ const LoginTemplateBlock = styled.div`
 const LoginTemplate = ({ onChange, onClick, onEnter }) => {
   return (
     <LoginTemplateBlock>
-      <h2>로그인</h2>
+      <h2>ADMIN</h2>
       <span>
         <Input
           name="adminId"

@@ -10,19 +10,21 @@ import {
 import apiRequest from "../../lib/api/apiRequest";
 
 const MenuContainer = () => {
-  const { menuList, temporaryMenuList } = useSelector(({ menu }) => menu);
-
   const dispatch = useDispatch();
+
+  const { menuList } = useSelector(({ menu }) => menu);
+  const [temporaryMenuList, setTemporaryMenuList] = useState([...menuList]);
+  const [temporaryChildrenMenuList, setTemporaryChildrenMenuList] = useState(
+    []
+  );
+  const [selectedParentMenuId, setSelectedParentMenuId] = useState(0);
+
   const [childForm, setChildForm] = useState({});
   const [menuForm, setMenuForm] = useState({ menuName: "", menuPath: "" });
 
   const onChangeMenuForm = (e) => {
     const { name, value } = e.target;
     setMenuForm({ ...menuForm, [name]: value });
-  };
-
-  const onChildFormChange = (e) => {
-    const { name, value } = e.target;
   };
 
   const saveMenu = () => {
@@ -33,17 +35,22 @@ const MenuContainer = () => {
     dispatch(asyncRemoveTheMenu(menuId));
   };
 
-  const onAddMenu = (menuId) => {};
-
-  useEffect(() => {
-    dispatch(initTemporaryMenuList(menuList));
-  }, [menuList, dispatch]);
+  const handleParentMenuClick = (parentMenuId) => {
+    const childrenMenu = temporaryMenuList.filter(
+      (parentMenu) => parentMenu.id === parentMenuId
+    )[0].childrenMenu;
+    setSelectedParentMenuId(parentMenuId);
+    setTemporaryChildrenMenuList([...childrenMenu]);
+  };
 
   return (
     <>
       <MenuListTemplate
-        temporaryMenuList={temporaryMenuList ? temporaryMenuList : []}
+        temporaryMenuList={temporaryMenuList}
+        temporaryChildrenMenuList={temporaryChildrenMenuList}
         onRemoveMenu={onRemoveMenu}
+        handleParentMenuClick={handleParentMenuClick}
+        selectedParentMenuId={selectedParentMenuId}
       />
       <MenuFormTemplate
         onChangeMenuForm={onChangeMenuForm}

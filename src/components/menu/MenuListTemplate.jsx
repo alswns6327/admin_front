@@ -1,4 +1,6 @@
 import styled from "styled-components";
+import Table from "../common/Table";
+import { useRef } from "react";
 
 const MenuListTemplateBlock = styled.div``;
 
@@ -9,24 +11,31 @@ const MenuListTemplate = ({
   temporaryChildrenMenuList,
   selectedParentMenuId,
 }) => {
+  const list = temporaryMenuList.map((menu) => ({
+    key: menu.id,
+    items: [menu.menuName, menu.menuPath],
+  }));
+  const childrenList = temporaryChildrenMenuList.map((childMenu) => ({
+    key: childMenu.id,
+    items: [childMenu.menuName, childMenu.menuPath],
+  }));
   return (
     <MenuListTemplateBlock>
-      {temporaryMenuList.map((menu) => (
-        <div
-          key={menu.id}
-          onClick={() => {
-            handleParentMenuClick(menu.id);
-          }}
-        >
-          {menu.menuName}, ({menu.menuPath})
-          <button onClick={() => onRemoveMenu(menu.id)}>삭제</button>
-        </div>
-      ))}
-      {temporaryChildrenMenuList.map((childrenMenu) => (
-        <div key={childrenMenu.id}>
-          {childrenMenu.menuName}, ({childrenMenu.menuPath})
-        </div>
-      ))}
+      <Table
+        list={list}
+        listItemClick={handleParentMenuClick}
+        handleRemoveItem={onRemoveMenu}
+        headerList={["메뉴명", "메뉴 경로", "수정", "삭제"]}
+        headerTitle={"상단 메뉴"}
+      />
+      <br />
+      <br />
+      <Table
+        list={childrenList}
+        handleRemoveItem={onRemoveMenu}
+        headerList={["메뉴명", "메뉴 경로", "수정", "삭제"]}
+        headerTitle={"하위 메뉴"}
+      />
     </MenuListTemplateBlock>
   );
 };

@@ -52,10 +52,10 @@ const MenuContainer = () => {
         handleParentMenuClick={handleParentMenuClick}
         selectedParentMenuId={selectedParentMenuId}
       />
-      <MenuFormTemplate
+      {/* <MenuFormTemplate
         onChangeMenuForm={onChangeMenuForm}
         saveMenu={saveMenu}
-      />
+      /> */}
     </>
   );
 };

@@ -13,22 +13,28 @@ const MenuContainer = () => {
   const dispatch = useDispatch();
 
   const { menuList } = useSelector(({ menu }) => menu);
-  const [temporaryMenuList, setTemporaryMenuList] = useState([...menuList]);
+  const [temporaryMenuList, setTemporaryMenuList] = useState([
+    ...menuList.map((menu) => ({ ...menu, input: false })),
+  ]);
+
   const [temporaryChildrenMenuList, setTemporaryChildrenMenuList] = useState(
     []
   );
-  const [selectedParentMenuId, setSelectedParentMenuId] = useState(0);
+  const [selectedParentMenuId, setSelectedParentMenuId] = useState(-1);
+  const [newMenuId, setNewMenuId] = useState(0);
 
-  const [childForm, setChildForm] = useState({});
-  const [menuForm, setMenuForm] = useState({ menuName: "", menuPath: "" });
-
-  const onChangeMenuForm = (e) => {
-    const { name, value } = e.target;
-    setMenuForm({ ...menuForm, [name]: value });
-  };
-
-  const saveMenu = () => {
-    dispatch(asyncSaveTheMenu({ ...menuForm, menuOrder: 1, parentMenuId: 0 }));
+  const handleSaveMenu = ([{ key: id, list: items, parentMenuId }]) => {
+    const [{ menuName }, { menuPath }] = items;
+    if (typeof id === "string") id = null;
+    const menu = {
+      menuName,
+      menuPath,
+      id,
+      parentMenuId: parentMenuId,
+      menuOrder: 5,
+    };
+    console.log(menu);
+    apiRequest(asyncSaveTheMenu, menu, dispatch, navigator);
   };
 
   const onRemoveMenu = (menuId) => {
@@ -40,7 +46,59 @@ const MenuContainer = () => {
       (parentMenu) => parentMenu.id === parentMenuId
     )[0].childrenMenu;
     setSelectedParentMenuId(parentMenuId);
-    setTemporaryChildrenMenuList([...childrenMenu]);
+    setTemporaryChildrenMenuList([
+      ...childrenMenu.map((childMenu) => ({ ...childMenu, input: false })),
+    ]);
+  };
+
+  const handleParentMenuAdd = () => {
+    setTemporaryMenuList([
+      ...temporaryMenuList,
+      {
+        id: "new_".concat(newMenuId),
+        parentMenuId: 0,
+        menuName: "",
+        menuPath: "",
+        input: true,
+        childrenMenu: [],
+      },
+    ]);
+    setNewMenuId(newMenuId + 1);
+  };
+
+  const handleChildMenuAdd = () => {
+    if (selectedParentMenuId === -1) return alert("상단 메뉴를 선택해주세요.");
+    setTemporaryChildrenMenuList([
+      ...temporaryChildrenMenuList,
+      {
+        id: "new_".concat(newMenuId),
+        parentMenuId: selectedParentMenuId,
+        menuName: "",
+        menuPath: "",
+        input: true,
+      },
+    ]);
+    setNewMenuId(newMenuId + 1);
+  };
+
+  const handleParentToggleInput = (menuId) => {
+    setTemporaryMenuList([
+      ...temporaryMenuList.map((menu) =>
+        menu.id === menuId
+          ? { ...menu, input: !menu.input }
+          : { ...menu, input: false }
+      ),
+    ]);
+  };
+
+  const handleChildToggleInput = (menuId) => {
+    setTemporaryChildrenMenuList([
+      ...temporaryChildrenMenuList.map((childMenu) =>
+        childMenu.id === menuId
+          ? { ...childMenu, input: !childMenu.input }
+          : { ...childMenu, input: false }
+      ),
+    ]);
   };
 
   return (
@@ -50,12 +108,12 @@ const MenuContainer = () => {
         temporaryChildrenMenuList={temporaryChildrenMenuList}
         onRemoveMenu={onRemoveMenu}
         handleParentMenuClick={handleParentMenuClick}
-        selectedParentMenuId={selectedParentMenuId}
+        handleParentMenuAdd={handleParentMenuAdd}
+        handleChildMenuAdd={handleChildMenuAdd}
+        handleParentToggleInput={handleParentToggleInput}
+        handleChildToggleInput={handleChildToggleInput}
+        handleSaveMenu={handleSaveMenu}
       />
-      {/* <MenuFormTemplate
-        onChangeMenuForm={onChangeMenuForm}
-        saveMenu={saveMenu}
-      /> */}
     </>
   );
 };

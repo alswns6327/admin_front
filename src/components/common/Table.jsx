@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import Button from "./Button";
 import palette from "../../lib/styles/palette";
+import Input from "./Input";
 
 const TableBlock = styled.div`
   table {
@@ -18,17 +19,29 @@ const TableBlock = styled.div`
     background-color: ${palette.gray[6]};
     text-align: center;
   }
+  input {
+    width: 20%;
+  }
 `;
 const Table = ({
   headerList,
   headerTitle,
-  list,
+  lists,
   listItemClick,
+  handleAdd,
+  handleSave,
+  handleToggle,
   handleRemoveItem,
+  handleChangeField,
+  inputList,
 }) => {
+  if (lists.length !== inputList.length) return <></>;
+
   return (
     <TableBlock>
-      <Button>+</Button>
+      <div style={{ textAlign: "right" }}>
+        <Button onClick={handleAdd}>+</Button>
+      </div>
       <table>
         <thead>
           <tr>
@@ -43,23 +56,53 @@ const Table = ({
           </tr>
         </thead>
         <tbody>
-          {list.map((items) => (
+          {lists.map((list, i) => (
             <tr
-              key={"tr".concat(items.key)}
+              key={"tr".concat(list.key)}
               onClick={
-                listItemClick ? () => listItemClick(items.key) : () => null
+                listItemClick ? () => listItemClick(list.key) : () => null
               }
             >
-              {items.items.map((item) => (
-                <td key={item}>{item}</td>
+              {list.items.map((item, j) => (
+                <td key={item.value.concat(j)}>
+                  {list.input ? (
+                    <Input
+                      onChange={(e) => {
+                        handleChangeField(e.target, inputList[i].key);
+                      }}
+                      name={Object.keys(inputList[i].list[j])[0]}
+                      value={
+                        inputList[i].list[j][
+                          Object.keys(inputList[i].list[j])[0]
+                        ]
+                      }
+                    />
+                  ) : (
+                    item.value
+                  )}
+                </td>
               ))}
               <td>
-                <Button onClick={() => handleRemoveItem(items.key)}>
-                  수정
+                <Button
+                  onClick={(event) => {
+                    event.stopPropagation();
+                    list.input
+                      ? handleSave(
+                          inputList.filter((input) => input.key === list.key)
+                        )
+                      : handleToggle(list.key);
+                  }}
+                >
+                  {list.input ? "저장" : "수정"}
                 </Button>
               </td>
               <td>
-                <Button onClick={() => handleRemoveItem(items.key)}>
+                <Button
+                  onClick={(event) => {
+                    event.stopPropagation();
+                    handleRemoveItem(list.key);
+                  }}
+                >
                   삭제
                 </Button>
               </td>

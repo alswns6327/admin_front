@@ -60,7 +60,6 @@ const StyledLink = styled(Link)`
 
 const MenuNav = ({ onLogout }) => {
   const { menuList } = useSelector(({ menu }) => menu);
-
   return (
     <MenuNavBlock>
       <ul>
@@ -68,17 +67,22 @@ const MenuNav = ({ onLogout }) => {
           ? menuList.map((menu) => (
               <li key={menu.id}>
                 <StyledLink to={menu.menuPath}>{menu.menuName}</StyledLink>
-                {menu.childrenMenu
-                  ? menu.childrenMenu.map((childMenu) => (
-                      <ul key={"parent" + menu.menuId}>
+                {menu.childrenMenu ? (
+                  <ul key={"parent" + menu.menuId}>
+                    {menu.childrenMenu.map((childMenu) => {
+                      console.log(childMenu);
+                      return (
                         <li key={childMenu.menuId}>
                           <StyledLink to={childMenu.menuPath}>
                             {childMenu.menuName}
                           </StyledLink>
                         </li>
-                      </ul>
-                    ))
-                  : []}
+                      );
+                    })}
+                  </ul>
+                ) : (
+                  []
+                )}
               </li>
             ))
           : []}

@@ -6,7 +6,7 @@ const MenuListTemplateBlock = styled.div``;
 
 const MenuListTemplate = ({
   temporaryMenuList,
-  onRemoveMenu,
+  handleRemoveMenu,
   handleParentMenuClick,
   temporaryChildrenMenuList,
   handleSaveMenu,
@@ -111,7 +111,7 @@ const MenuListTemplate = ({
         listItemClick={handleParentMenuClick}
         handleAdd={handleParentMenuAdd}
         handleSave={handleSaveMenu}
-        handleRemoveItem={onRemoveMenu}
+        handleRemoveItem={handleRemoveMenu}
         handleToggle={handleParentToggleInput}
         handleChangeField={handleParentMenuFieldChange}
         headerList={["메뉴명", "메뉴 경로", "수정", "삭제"]}
@@ -124,7 +124,7 @@ const MenuListTemplate = ({
         inputList={childrenInputList}
         handleAdd={handleChildMenuAdd}
         handleSave={handleSaveMenu}
-        handleRemoveItem={onRemoveMenu}
+        handleRemoveItem={handleRemoveMenu}
         handleToggle={handleChildToggleInput}
         handleChangeField={handleChildrenFieldChange}
         headerList={["메뉴명", "메뉴 경로", "수정", "삭제"]}

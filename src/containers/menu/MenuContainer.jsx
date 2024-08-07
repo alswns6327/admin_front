@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import MenuListTemplate from "../../components/menu/MenuListTemplate";
-import MenuFormTemplate from "../../components/menu/MenuFormTemplate";
 import { useDispatch, useSelector } from "react-redux";
 import {
   asyncRemoveTheMenu,
@@ -37,7 +36,7 @@ const MenuContainer = () => {
     apiRequest(asyncSaveTheMenu, menu, dispatch, navigator);
   };
 
-  const onRemoveMenu = (menuId) => {
+  const handleRemoveMenu = (menuId) => {
     dispatch(asyncRemoveTheMenu(menuId));
   };
 
@@ -106,7 +105,7 @@ const MenuContainer = () => {
       <MenuListTemplate
         temporaryMenuList={temporaryMenuList}
         temporaryChildrenMenuList={temporaryChildrenMenuList}
-        onRemoveMenu={onRemoveMenu}
+        handleRemoveMenu={handleRemoveMenu}
         handleParentMenuClick={handleParentMenuClick}
         handleParentMenuAdd={handleParentMenuAdd}
         handleChildMenuAdd={handleChildMenuAdd}

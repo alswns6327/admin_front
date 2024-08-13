@@ -8,3 +8,6 @@ export const getAdminList = () => createRequest("get", "/admin/list");
 export const saveAdmin = (admin) => createRequest("post", "/admin", admin);
 
 export const logout = () => createRequest("post", "/logout1");
+
+export const removeAdmin = (adminId) =>
+  createRequest("delete", "/admin/".concat(adminId));

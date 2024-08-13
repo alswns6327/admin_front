@@ -3,6 +3,7 @@ import LoginTemplate from "../../components/auth/LoginTemplate";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { asyncLogin } from "../../modules/auth";
+import apiRequest from "../../lib/api/apiRequest";
 
 const LoginForm = () => {
   const dispatch = useDispatch();
@@ -15,11 +16,12 @@ const LoginForm = () => {
     setLoginForm({ ...loginForm, [name]: value });
   };
   const onClick = () => {
-    dispatch(asyncLogin(loginForm));
+    apiRequest(asyncLogin, loginForm, dispatch, navigator);
   };
 
   const onEnter = (e) => {
-    if (e.key === "Enter") dispatch(asyncLogin(loginForm));
+    if (e.key === "Enter")
+      apiRequest(asyncLogin, loginForm, dispatch, navigator);
   };
 
   useEffect(() => {

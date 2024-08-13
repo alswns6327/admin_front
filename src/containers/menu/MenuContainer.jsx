@@ -7,9 +7,11 @@ import {
   initTemporaryMenuList,
 } from "../../modules/menu";
 import apiRequest from "../../lib/api/apiRequest";
+import { useNavigate } from "react-router-dom";
 
 const MenuContainer = () => {
   const dispatch = useDispatch();
+  const navigator = useNavigate();
 
   const { menuList } = useSelector(({ menu }) => menu);
   const [temporaryMenuList, setTemporaryMenuList] = useState([
@@ -57,7 +59,7 @@ const MenuContainer = () => {
   };
 
   const handleRemoveMenu = (menuId) => {
-    dispatch(asyncRemoveTheMenu(menuId));
+    apiRequest(asyncRemoveTheMenu, menuId, dispatch, navigator);
   };
 
   const handleParentMenuClick = (parentMenuId) => {

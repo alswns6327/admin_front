@@ -1,24 +1,28 @@
 import React, { useEffect, useState } from "react";
 import AccountListTemplate from "../../components/account/AccountListTemplate";
 import { useDispatch } from "react-redux";
-import { getAdminList, saveAdmin } from "../../lib/api/auth";
+import { getAdminList, removeAdmin, saveAdmin } from "../../lib/api/auth";
+import apiRequest from "../../lib/api/apiRequest";
+import { useNavigate } from "react-router-dom";
 
 const AccountContainer = () => {
   const dispatch = useDispatch();
-
+  const navigator = useNavigate();
   const [adminList, setAdminList] = useState([]);
   const [newAdminId, setNewAdminId] = useState(0);
 
   useEffect(() => {
     const getAdmin = async () => {
-      const response = await getAdminList();
+      const response = await apiRequest(getAdminList, {}, null, navigator);
       setAdminList(response.data);
     };
     getAdmin();
   }, []);
 
-  const handleRemoveAdmin = (adminId) => {
-    //dispatch(asyncRemoveTheMenu(adminId));
+  const handleRemoveAdmin = async (adminId) => {
+    const response = await apiRequest(removeAdmin, adminId, null, navigator);
+
+    setAdminList(response.data);
   };
 
   const handleAdminAdd = () => {

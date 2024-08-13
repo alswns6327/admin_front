@@ -70,7 +70,6 @@ const MenuNav = ({ onLogout }) => {
                 {menu.childrenMenu ? (
                   <ul key={"parent" + menu.menuId}>
                     {menu.childrenMenu.map((childMenu) => {
-                      console.log(childMenu);
                       return (
                         <li key={childMenu.menuId}>
                           <StyledLink to={childMenu.menuPath}>

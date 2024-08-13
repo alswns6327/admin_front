@@ -16,7 +16,6 @@ export const asyncLogin = createAsyncThunk(
   LOGIN,
   async ({ adminId, password }) => {
     const response = await api.login({ adminId, password });
-    console.log(response);
     localStorage.setItem("accessToken", response.data.accessToken);
     apiClient.defaults.headers.Authorization = "Bearer ".concat(
       response.data.accessToken

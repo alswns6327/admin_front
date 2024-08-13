@@ -56,7 +56,6 @@ const AccountContainer = () => {
     }
 
     const response = await saveAdmin({});
-    console.log(response);
   };
 
   return (

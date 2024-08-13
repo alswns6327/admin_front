@@ -22,6 +22,27 @@ const MenuContainer = () => {
   const [selectedParentMenuId, setSelectedParentMenuId] = useState(-1);
   const [newMenuId, setNewMenuId] = useState(0);
 
+  useEffect(() => {
+    setTemporaryMenuList([
+      ...menuList.map((menu) => ({ ...menu, input: false })),
+    ]);
+  }, [menuList]);
+
+  useEffect(() => {
+    const childrenMenu =
+      selectedParentMenuId !== -1
+        ? temporaryMenuList.filter(
+            (parentMenu) => parentMenu.id === selectedParentMenuId
+          )[0].childrenMenu
+        : [];
+
+    setTemporaryChildrenMenuList(
+      childrenMenu
+        ? [...childrenMenu.map((childMenu) => ({ ...childMenu, input: false }))]
+        : []
+    );
+  }, [temporaryMenuList]);
+
   const handleSaveMenu = ([{ key: id, list: items, parentMenuId }]) => {
     const [{ menuName }, { menuPath }] = items;
     if (typeof id === "string") id = null;
@@ -32,7 +53,6 @@ const MenuContainer = () => {
       parentMenuId: parentMenuId,
       menuOrder: 5,
     };
-    console.log(menu);
     apiRequest(asyncSaveTheMenu, menu, dispatch, navigator);
   };
 

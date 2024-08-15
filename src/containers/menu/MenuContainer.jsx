@@ -47,7 +47,7 @@ const MenuContainer = () => {
 
   const handleSaveMenu = ([{ key: id, list: items, parentMenuId }]) => {
     const [{ menuName }, { menuPath }] = items;
-    if (typeof id === "string") id = null;
+    if (typeof id === "string") id = -1;
     const menu = {
       menuName,
       menuPath,

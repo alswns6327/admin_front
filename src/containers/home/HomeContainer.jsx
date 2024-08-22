@@ -21,7 +21,7 @@ const HomeContainer = () => {
 
   useEffect(
     function checkAuth() {
-      if (!auth.adminId) navigator("login");
+      if (!auth.adminId) navigator("/login");
     },
     [auth, dispatch, navigator]
   );

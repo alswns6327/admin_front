@@ -32,17 +32,18 @@ const MenuContainer = () => {
 
   useEffect(() => {
     const childrenMenu =
-      selectedParentMenuId !== -1
+      selectedParentMenuId !== -1 && typeof selectedParentMenuId !== "string"
         ? temporaryMenuList.filter(
             (parentMenu) => parentMenu.id === selectedParentMenuId
           )[0].childrenMenu
         : [];
-
+    console.log(222);
     setTemporaryChildrenMenuList(
       childrenMenu
         ? [...childrenMenu.map((childMenu) => ({ ...childMenu, input: false }))]
         : []
     );
+    console.log(333);
   }, [temporaryMenuList]);
 
   const handleSaveMenu = ([{ key: id, list: items, parentMenuId }]) => {
@@ -59,6 +60,18 @@ const MenuContainer = () => {
   };
 
   const handleRemoveMenu = (menuId) => {
+    if (typeof menuId === "string") {
+      if (temporaryMenuList.filter((menu) => menu.id === menuId).length === 1) {
+        setTemporaryMenuList(
+          temporaryMenuList.filter((menu) => menu.id !== menuId)
+        );
+      } else {
+        setTemporaryChildrenMenuList(
+          temporaryChildrenMenuList.filter((menu) => menu.id !== menuId)
+        );
+      }
+      return;
+    }
     apiRequest(asyncRemoveTheMenu, menuId, dispatch, navigator);
   };
 

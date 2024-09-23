@@ -20,6 +20,10 @@ const AccountContainer = () => {
   }, []);
 
   const handleRemoveAdmin = async (adminId) => {
+    if (typeof adminId === "string") {
+      setAdminList(adminList.filter((admin) => admin.id !== adminId));
+      return;
+    }
     const response = await apiRequest(removeAdmin, adminId, null, navigator);
 
     setAdminList(response.data);

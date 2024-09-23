@@ -61,6 +61,12 @@ const CodeContainer = () => {
     setCodeList(list.map((item) => ({ ...item, input: false })));
   };
   const handleRemoveCodeGroup = async (codeGroupId) => {
+    if (typeof codeGroupId === "string") {
+      setCodeGroupList(
+        codeGroupList.filter((codeGroup) => codeGroup.id !== codeGroupId)
+      );
+      return;
+    }
     const response = await apiRequest(
       removeCodeGroup,
       codeGroupId,
@@ -71,6 +77,10 @@ const CodeContainer = () => {
     setCodeGroupList(list.map((item) => ({ ...item, input: false })));
   };
   const handleRemoveCode = async (codeId) => {
+    if (typeof codeId === "string") {
+      setCodeList(codeList.filter((code) => code.id !== codeId));
+      return;
+    }
     const response = await apiRequest(removeCode, codeId, null, navigator);
     const list = response.data;
     setCodeList(list.map((item) => ({ ...item, input: false })));
